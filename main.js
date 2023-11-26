@@ -9,12 +9,22 @@ let camera, scene, renderer;
 let object;
 
 init();
+animate();
 
+function animate() {
+  requestAnimationFrame(animate);
+
+  if (object) {
+    object.rotation.y += 0.01;
+  }
+
+  render();
+}
 
 function init() {
 
-  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 20 );
-  camera.position.z = 2;
+  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 2000 );
+  camera.position.set(0, 0.5, 0.85);
 
   // scene
 
@@ -39,6 +49,8 @@ function init() {
         if (child.name === "pCube3") child.material.map = textureGrass;
         if (child.name === "pCylinder1") child.material.map = texturePattern;
         if (child.name === "Mesh") child.material.map = textureRose;
+        if (child.name === "pCube1") child.material.map = textureGrass;
+        if (child.name === "pCube2") child.material.map = textureGrass;
       }
 
     } );
