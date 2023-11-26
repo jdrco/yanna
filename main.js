@@ -44,7 +44,6 @@ function init() {
     object.traverse( function ( child ) {
 
       if ( child.isMesh ) {
-        console.log('here',child.name)
         child.material.map = textureGrass;
         if (child.name === "pCube3") child.material.map = textureGrass;
         if (child.name === "pCylinder1") child.material.map = texturePattern;
