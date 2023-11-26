@@ -4,7 +4,7 @@
     <title>Happy Birthday - Yanna</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <link rel="icon" href="vite.svg" type="image/x-icon">
+    <link rel="icon" href="./vite.svg" type="image/x-icon">
     <link type="text/css" rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -17,6 +17,14 @@
         <h3>From: Jared D</h3>
         <p>P.S. you can click and rotate the rose around. it's pretty cool cus it uses Three.js which is a JavaScript library that simplifies the creation and rendering of 3D graphics on the web by leveraging the WebGL API.</p>
       </div>
+      <script type="importmap">
+        {
+          "imports": {
+            "three": "../dist/three.module.js",
+            "three/addons/": "./jsm/"
+          }
+        }
+      </script>
       <script type="module" src="main.js"></script>
       <script type="module" src="bounce.js"></script>
     </div>
