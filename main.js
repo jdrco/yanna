@@ -67,9 +67,9 @@ function init() {
   // texture
 
   const textureLoader = new THREE.TextureLoader( manager );
-  const textureGrass = textureLoader.load('/grass_texture225.jpg', render);
-  const texturePattern = textureLoader.load('/texture-green-paper-pattern-scratch-background-photo-hd-wallpaper.jpg', render);
-  const textureRose = textureLoader.load('/wildtextures-leather-Campo-rose.jpg', render);
+  const textureGrass = textureLoader.load('./grass_texture225.jpg', render);
+  const texturePattern = textureLoader.load('./texture-green-paper-pattern-scratch-background-photo-hd-wallpaper.jpg', render);
+  const textureRose = textureLoader.load('./wildtextures-leather-Campo-rose.jpg', render);
   textureGrass.colorSpace = THREE.SRGBColorSpace;
   texturePattern.colorSpace = THREE.SRGBColorSpace;
   textureRose.colorSpace = THREE.SRGBColorSpace;
@@ -90,7 +90,7 @@ function init() {
   function onError() {}
 
   const loader = new OBJLoader( manager );
-  loader.load( '/rose.obj', function ( obj ) {
+  loader.load( './rose.obj', function ( obj ) {
 
     object = obj;
 
