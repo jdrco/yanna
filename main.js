@@ -1,24 +1,121 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import './style.css';
+import * as THREE from 'three';
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-setupCounter(document.querySelector('#counter'))
+let camera, scene, renderer;
+
+let object;
+
+init();
+
+
+function init() {
+
+  camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 20 );
+  camera.position.z = 2;
+
+  // scene
+
+  scene = new THREE.Scene();
+
+  const ambientLight = new THREE.AmbientLight( 0xffffff );
+  scene.add( ambientLight );
+
+  const pointLight = new THREE.PointLight( 0xffffff, 15 );
+  camera.add( pointLight );
+  scene.add( camera );
+
+  // manager
+
+  function loadModel() {
+
+    object.traverse( function ( child ) {
+
+      if ( child.isMesh ) {
+        console.log('here',child.name)
+        child.material.map = textureGrass;
+        if (child.name === "pCube3") child.material.map = textureGrass;
+        if (child.name === "pCylinder1") child.material.map = texturePattern;
+        if (child.name === "Mesh") child.material.map = textureRose;
+      }
+
+    } );
+
+    object.position.y = - 0.95;
+    object.scale.setScalar( 0.01 );
+    scene.add( object );
+
+    render();
+
+  }
+
+  const manager = new THREE.LoadingManager( loadModel );
+
+  // texture
+
+  const textureLoader = new THREE.TextureLoader( manager );
+  const textureGrass = textureLoader.load('/grass_texture225.jpg', render);
+  const texturePattern = textureLoader.load('/texture-green-paper-pattern-scratch-background-photo-hd-wallpaper.jpg', render);
+  const textureRose = textureLoader.load('/wildtextures-leather-Campo-rose.jpg', render);
+  textureGrass.colorSpace = THREE.SRGBColorSpace;
+  texturePattern.colorSpace = THREE.SRGBColorSpace;
+  textureRose.colorSpace = THREE.SRGBColorSpace;
+
+  // model
+
+  function onProgress( xhr ) {
+
+    if ( xhr.lengthComputable ) {
+
+      const percentComplete = xhr.loaded / xhr.total * 100;
+      console.log( 'model ' + percentComplete.toFixed( 2 ) + '% downloaded' );
+
+    }
+
+  }
+
+  function onError() {}
+
+  const loader = new OBJLoader( manager );
+  loader.load( '/rose.obj', function ( obj ) {
+
+    object = obj;
+
+  }, onProgress, onError );
+
+  //
+
+  renderer = new THREE.WebGLRenderer( { antialias: true } );
+  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  document.body.appendChild( renderer.domElement );
+
+  //
+
+  const controls = new  OrbitControls( camera, renderer.domElement );
+  controls.minDistance = 1;
+  controls.maxDistance = 3;
+  controls.addEventListener( 'change', render );
+
+  //
+
+  window.addEventListener( 'resize', onWindowResize );
+
+}
+
+function onWindowResize() {
+
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
+
+function render() {
+
+  renderer.render( scene, camera );
+
+}

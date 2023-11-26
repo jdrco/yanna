@@ -1,34 +1,20 @@
-<!-- <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
-  </body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday - Yanna</title>
-</head>
-<body>
-    <h1>It is your birthday!</h1>
-    <p></p>
-    <p>From: Jared D</p>
-
-    <!-- Include your 3D model -->
-    <model-viewer src="rose.glb" alt="Rose Model" auto-rotate camera-controls></model-viewer>
-
-    <script type="module">
-        import 'https://unpkg.com/@google/model-viewer/dist/model-viewer.esm.min.mjs';
-    </script>
-</body>
+	<head>
+		<title>Happy Birthday - Yanna</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="main.css">
+	</head>
+	<body>
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "../build/three.module.js",
+					"three/addons/": "./jsm/"
+				}
+			}
+		</script>
+    <script type="module" src="main.js"></script>
+	</body>
 </html>
