@@ -25,4 +25,3 @@ function animate() {
 }
 
 window.requestAnimationFrame(animate);
-console.log('here');
